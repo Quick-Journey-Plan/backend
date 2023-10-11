@@ -3,19 +3,12 @@ import { CreateOpenaiApiDto } from './dto/create-openai-api.dto';
 
 @Injectable()
 export class OpenaiApiService {
-  create(createOpenaiApiDto: CreateOpenaiApiDto) {
+
+  getCityInfo(createOpenaiApiDto: CreateOpenaiApiDto) {
+    // @TODO: first check the city in DB
+
+    // @TODO: get datas from OpenAI API
     return 'This action adds a new openaiApi';
   }
 
-  findAll() {
-    return `This action returns all openaiApi`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} openaiApi`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} openaiApi`;
-  }
 }
