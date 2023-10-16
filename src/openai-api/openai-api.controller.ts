@@ -7,8 +7,8 @@ export class OpenaiApiController {
   constructor(private readonly openaiApiService: OpenaiApiService) { }
 
   @Post()
-  getCityInfo(@Body() createOpenaiApiDto: CreateOpenaiApiDto) {
-    return this.openaiApiService.getCityInfo(createOpenaiApiDto);
+  public async getCityInfo(@Body() createOpenaiApiDto: CreateOpenaiApiDto): Promise<string> {
+    return await this.openaiApiService.getCityInfo(createOpenaiApiDto);
   }
 
 }
