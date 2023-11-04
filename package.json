@@ -5,9 +5,9 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "engines" : { 
-    "npm" : ">=10.1.0",
-    "node" : ">=18.18.0"
+  "engines": {
+    "npm": ">=10.1.0",
+    "node": ">=18.18.0"
   },
   "scripts": {
     "build": "nest build",
@@ -32,6 +32,7 @@
     "@nestjs/typeorm": "^10.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "mysql2": "^3.6.3",
     "openai": "^4.12.1",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",

@@ -11,7 +11,7 @@ import { AppService } from './app.service';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'postgres',
+      type: 'mysql',
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT),
       password: process.env.DB_PASSWORD,
@@ -19,7 +19,6 @@ import { AppService } from './app.service';
       entities: [],
       database: process.env.DB_NAME,
       synchronize: true,
-      logging: true,
     }),
     OpenaiApiModule,
     UsersModule,
