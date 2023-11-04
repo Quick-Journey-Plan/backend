@@ -1,0 +1,86 @@
+#ddev-generated
+
+http:
+  routers:
+    
+    
+    quick-journey-web-80-http:
+      
+      rule: HostRegexp(`quick-journey.ddev.site`)
+      
+      service: "quick-journey-web-80-http"
+      tls: false
+      entrypoints:
+        - http-80
+    
+    
+    quick-journey-web-8025-http:
+      
+      rule: HostRegexp(`quick-journey.ddev.site`)
+      
+      service: "quick-journey-web-8025-http"
+      tls: false
+      entrypoints:
+        - http-8025
+    
+    
+    
+    
+    
+    
+    quick-journey-web-80-https:
+      
+      rule: HostRegexp(`quick-journey.ddev.site`)
+      
+      service: "quick-journey-web-80-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-443
+    
+    
+    quick-journey-web-8025-https:
+      
+      rule: HostRegexp(`quick-journey.ddev.site`)
+      
+      service: "quick-journey-web-8025-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-8026
+    
+    
+
+  services:
+    
+    quick-journey-web-80-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-quick-journey-web:80
+    
+    quick-journey-web-8025-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-quick-journey-web:8025
+    
+    quick-journey-web-80-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-quick-journey-web:80
+    
+    quick-journey-web-8025-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-quick-journey-web:8025
+    
+
+
+tls:
+  certificates:
+    - certFile: /mnt/ddev-global-cache/traefik/certs/quick-journey.crt
+      keyFile: /mnt/ddev-global-cache/traefik/certs/quick-journey.key
+
