@@ -5,18 +5,25 @@ import OpenAI from 'openai';
 @Injectable()
 export class OpenaiApiService {
 
-  public async getCityInfo(createOpenaiApiDto: CreateOpenaiApiDto): Promise<OpenAI.Chat.Completions.ChatCompletion.Choice[]> {
+  public async getCityInfo(createOpenaiApiDto: CreateOpenaiApiDto): Promise<string> {
     // @TODO: first check the city in DB
+
+    return '';
+  }
+
+  private async getCityInfoFromAI(city: string): Promise<string> {
 
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
 
     const chatCompletion = await openai.chat.completions.create({
-      messages: [{ role: 'user', content: `give me 3 days plan in ${createOpenaiApiDto.city}` }],
+      messages: [{ role: 'user', content: `give me 1 day plan in ${city}` }],
       model: 'gpt-3.5-turbo',
     });
 
-    return chatCompletion.choices;
+    console.log(chatCompletion.choices[0].message);
+
+    return 'demo';
   }
 }
