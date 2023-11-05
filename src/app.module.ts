@@ -1,28 +1,36 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { OpenaiApiModule } from './openai-api/openai-api.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CityModule } from './city/city.module';
+import { City } from './city/city.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT),
-      password: process.env.DB_PASSWORD,
-      username: process.env.DB_USER,
-      entities: [],
-      database: process.env.DB_NAME,
-      synchronize: true,
+
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get('DB_HOST'),
+        port: +configService.get('DB_PORT'),
+        username: configService.get('DB_USER'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_NAME'),
+        entities: [City],
+        synchronize: true,
+      }),
+      inject: [ConfigService],
     }),
     OpenaiApiModule,
     UsersModule,
     AuthModule,
+    CityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
