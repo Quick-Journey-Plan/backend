@@ -7,17 +7,32 @@ import { CityService } from 'src/city/city.service';
 export class OpenaiApiService {
   constructor(private readonly cityService: CityService) { }
 
+  /**
+   * Get city information. If the information is not in the database,
+   * it fetches it from an AI service and saves it to the database.
+   * @param createOpenaiApiDto The DTO containing the city name.
+   * @returns The city information.
+   */
   public async getCityInfo(createOpenaiApiDto: CreateOpenaiApiDto): Promise<string> {
-    // @TODO: first check the city in DB
     const { city } = createOpenaiApiDto;
 
-    const res = await this.cityService.saveCity({ title: city });
-    console.log(res);
+    // Check if city information exists in the database
+    const cityFromDB = await this.cityService.getCityFromDB(city);
 
-    return '';
+    if (!cityFromDB) {
+      // If not in the database, fetch from AI service and save to the database
+      return this.saveCityResultToDB(city);
+    }
+
+    return cityFromDB.title;
   }
 
-  private async getCityInfoFromAI(city: string): Promise<string> {
+  /**
+   * Fetch city information from an AI (ChatGPT).
+   * @param city The city name.
+   * @returns The city information from the AI (ChatGPT).
+   */
+  private async fetchCityInfoFromAI(city: string): Promise<string> {
 
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
@@ -28,8 +43,21 @@ export class OpenaiApiService {
       model: 'gpt-3.5-turbo',
     });
 
-    console.log(chatCompletion.choices[0].message);
+    return chatCompletion.choices[0].message.content;
+  }
 
-    return 'demo';
+  /**
+   * Save city information to the database.
+   * @param city The city name.
+   * @returns An empty string indicating success.
+   */
+  private async saveCityResultToDB(city: string): Promise<string> {
+    // Fetch city plan from AI service
+    const cityPlan = await this.fetchCityInfoFromAI(city);
+
+    // Save city information to the database
+    const res = await this.cityService.saveCity({ title: city });
+
+    return cityPlan;
   }
 }

@@ -8,7 +8,7 @@ export class City {
     @Column({ type: "varchar" })
     public title: string;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     public description: string;
 
     @Column({ type: "timestamp" })

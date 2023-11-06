@@ -7,12 +7,13 @@ import { Repository } from 'typeorm';
 export class CityService {
     public constructor(@InjectRepository(City) private readonly cityRepository: Repository<City>) { }
 
+    public async getCityFromDB(inputCity: string): Promise<City> {
+        return this.cityRepository.findOneBy({ title: inputCity });
+    }
+
     public async saveCity(city: { title: string }): Promise<City> {
         const cityObj = this.cityRepository.create(city);
-
-        console.log(cityObj);
 
         return await this.cityRepository.save(cityObj);
     }
 }
-    
