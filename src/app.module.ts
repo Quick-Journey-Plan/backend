@@ -8,6 +8,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CityModule } from './city/city.module';
 import { City } from './city/city.entity';
+import { PlanModule } from './plan/plan.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { City } from './city/city.entity';
       }),
       inject: [ConfigService],
     }),
+    PlanModule,
 
   ],
   controllers: [AppController],
