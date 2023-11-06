@@ -11,8 +11,11 @@ import { City } from './city/city.entity';
 
 @Module({
   imports: [
+    OpenaiApiModule,
+    CityModule,
+    UsersModule,
+    AuthModule,
     ConfigModule.forRoot(),
-
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
@@ -27,10 +30,7 @@ import { City } from './city/city.entity';
       }),
       inject: [ConfigService],
     }),
-    OpenaiApiModule,
-    UsersModule,
-    AuthModule,
-    CityModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],

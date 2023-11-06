@@ -1,12 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOpenaiApiDto } from './dto/create-openai-api.dto';
 import OpenAI from 'openai';
+import { CityService } from 'src/city/city.service';
 
 @Injectable()
 export class OpenaiApiService {
+  constructor(private readonly cityService: CityService) { }
 
   public async getCityInfo(createOpenaiApiDto: CreateOpenaiApiDto): Promise<string> {
     // @TODO: first check the city in DB
+    const { city } = createOpenaiApiDto;
+
+    const res = await this.cityService.saveCity({ title: city });
+    console.log(res);
 
     return '';
   }
