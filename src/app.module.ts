@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { CityModule } from './city/city.module';
 import { City } from './city/city.entity';
 import { PlanModule } from './plan/plan.module';
+import { Plan } from './plan/plan.entity';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { PlanModule } from './plan/plan.module';
         username: configService.get('DB_USER'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [City],
+        entities: [City, Plan],
         synchronize: true,
       }),
       inject: [ConfigService],

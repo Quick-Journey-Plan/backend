@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class CityService {
-    public constructor(@InjectRepository(City) private readonly cityRepository: Repository<City>) { }
+    constructor(@InjectRepository(City) private readonly cityRepository: Repository<City>) { }
 
     public async getCityFromDB(inputCity: string): Promise<City> {
         return this.cityRepository.findOneBy({ title: inputCity });

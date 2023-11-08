@@ -1,7 +1,8 @@
+import { City } from "src/city/city.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('plans')
-export class City {
+export class Plan {
     @PrimaryGeneratedColumn()
     public id: number;
 

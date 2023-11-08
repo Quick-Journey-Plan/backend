@@ -2,10 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { CreateOpenaiApiDto } from './dto/create-openai-api.dto';
 import OpenAI from 'openai';
 import { CityService } from 'src/city/city.service';
+import { PlanService } from 'src/plan/plan.service';
 
 @Injectable()
 export class OpenaiApiService {
-  constructor(private readonly cityService: CityService) { }
+  constructor(private readonly cityService: CityService, private readonly planService: PlanService) { }
 
   /**
    * Get city information. If the information is not in the database,
@@ -49,14 +50,17 @@ export class OpenaiApiService {
   /**
    * Save city information to the database.
    * @param city The city name.
-   * @returns An empty string indicating success.
+   * @returns City and Plan from AI.
    */
   private async saveCityResultToDB(city: string): Promise<string> {
     // Fetch city plan from AI service
     const cityPlan = await this.fetchCityInfoFromAI(city);
 
     // Save city information to the database
-    const res = await this.cityService.saveCity({ title: city });
+    const savedCity = await this.cityService.saveCity({ title: city });
+
+    // Save Plans to the DB
+    await this.planService.savePlan(savedCity, cityPlan)
 
     return cityPlan;
   }
