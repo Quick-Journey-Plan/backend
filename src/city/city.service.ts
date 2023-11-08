@@ -8,7 +8,7 @@ export class CityService {
     constructor(@InjectRepository(City) private readonly cityRepository: Repository<City>) { }
 
     public async getCityFromDB(inputCity: string): Promise<City> {
-        return this.cityRepository.findOneBy({ title: inputCity });
+        return await this.cityRepository.findOne({ where: { title: inputCity }, relations: ["plans"] });
     }
 
     public async saveCity(city: { title: string }): Promise<City> {

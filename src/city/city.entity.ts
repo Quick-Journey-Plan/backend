@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Plan } from "src/plan/plan.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('cities')
 export class City {
@@ -11,6 +12,9 @@ export class City {
     @Column({ type: "varchar", nullable: true })
     public description: string;
 
-    @Column({ type: "timestamp" })
+    @CreateDateColumn({ type: "timestamp" })
     public createdAt: number;
+
+    @OneToMany(() => Plan, (plan) => plan.city)
+    public plans: Plan[];
 }

@@ -1,5 +1,5 @@
 import { City } from "src/city/city.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('plans')
 export class Plan {
@@ -13,6 +13,6 @@ export class Plan {
     @JoinColumn({ name: 'city_id' })
     public city: City;
 
-    @Column({ type: "timestamp" })
+    @CreateDateColumn({ type: "timestamp" })
     public createdAt: number;
 }

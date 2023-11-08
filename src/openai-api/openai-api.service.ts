@@ -25,7 +25,7 @@ export class OpenaiApiService {
       return this.saveCityResultToDB(city);
     }
 
-    return cityFromDB.title;
+    return cityFromDB.plans.length ? cityFromDB.plans[0].plan : 'Plan not found, try again.';
   }
 
   /**
